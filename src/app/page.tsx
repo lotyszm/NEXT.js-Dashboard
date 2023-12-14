@@ -1,16 +1,15 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import SignOutButton from "@/components/next-auth/SignOutButton";
+import { authOptions } from "./api/auth/[...nextauth]/route";
 
 export default async function Home() {
 
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
 
   if(!session || !session.user) {
     redirect('/api/auth/signin');
   }
-
-  console.dir(session, { depth: 10 })
 
   return (
     <main className="">
