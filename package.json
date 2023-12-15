@@ -19,12 +19,14 @@
   "dependencies": {
     "@auth/core": "^0.18.6",
     "@auth/drizzle-adapter": "^0.3.11",
+    "bcrypt": "^5.1.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "drizzle-orm": "^0.29.1",
     "lucide-react": "^0.294.0",
     "next": "14.0.4",
     "next-auth": "^4.24.5",
+    "nodemailer": "^6.9.7",
     "postgres": "^3.4.3",
     "react": "^18",
     "react-dom": "^18",
@@ -33,6 +35,7 @@
   },
   "devDependencies": {
     "@next/env": "^14.0.4",
+    "@types/bcrypt": "^5.0.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
