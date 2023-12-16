@@ -1,12 +1,12 @@
-import { SignInProviderButton } from "@/components/auth/SignInProviderButton";
-import { getCsrfToken, getProviders, signIn } from "next-auth/react";
+import { SignInProviderButton } from '@/components/auth/SignInProviderButton';
+import { getCsrfToken, getProviders, signIn } from 'next-auth/react';
 
 export default async function SignInPage() {
   const providers = await getProviders();
-  const csrfToken = await getCsrfToken()
+  const csrfToken = await getCsrfToken();
 
   if (!providers) {
-    throw new Error("No providers");
+    throw new Error('No providers');
   }
 
   return (
@@ -16,11 +16,16 @@ export default async function SignInPage() {
           <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg border-0 bg-white">
             <div className="rounded-t mb-0 px-6 py-6">
               <div className="text-center mb-3">
-                <h6 className="text-slate-800 text-sm font-bold">Sign in with</h6>
+                <h6 className="text-slate-800 text-sm font-bold">
+                  Sign in with
+                </h6>
               </div>
               <div className="btn-wrapper text-center">
                 {Object.values(providers)
-                  .filter((provider) => !["Email", "Credentials"].includes(provider.name))
+                  .filter(
+                    (provider) =>
+                      !['Email', 'Credentials'].includes(provider.name)
+                  )
                   .map((provider) => (
                     <div key={provider.name}>
                       <SignInProviderButton provider={provider} />
@@ -33,15 +38,24 @@ export default async function SignInPage() {
               <div className="text-slate-400 text-center mb-3 font-bold">
                 <small>Or sign in with credentials</small>
               </div>
-              <form action={async (_formdata: FormData) => {
-                "use server";
-                const email = _formdata.get('username');
-                const password = _formdata.get('password');
-                signIn('credentials', { email: email, password: password, callbackUrl: '/' })
-              }}>
+              <form
+                action={async (_formdata: FormData) => {
+                  'use server';
+                  const email = _formdata.get('username');
+                  const password = _formdata.get('password');
+                  signIn('credentials', {
+                    email: email,
+                    password: password,
+                    callbackUrl: '/',
+                  });
+                }}
+              >
                 {/* <input name="csrfToken" type="hidden" defaultValue='150440a72d8ce0592e3ba0099a46a03b173892d91702d0f6282ef7ed58551ff0' /> */}
                 <div className="relative w-full mb-3">
-                  <label className="block uppercase text-slate-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                  <label
+                    className="block uppercase text-slate-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
                     Email
                   </label>
                   <input
@@ -52,7 +66,10 @@ export default async function SignInPage() {
                   />
                 </div>
                 <div className="relative w-full mb-3">
-                  <label className="block uppercase text-slate-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                  <label
+                    className="block uppercase text-slate-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
                     Password
                   </label>
                   <input
@@ -68,8 +85,8 @@ export default async function SignInPage() {
                     className="bg-slate-800 text-white active:bg-slate-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                     type="submit"
                   >
-                    {" "}
-                    Sign In{" "}
+                    {' '}
+                    Sign In{' '}
                   </button>
                 </div>
               </form>

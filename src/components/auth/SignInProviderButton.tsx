@@ -1,12 +1,16 @@
-"use client";
+'use client';
 
-import { ClientSafeProvider, signIn } from "next-auth/react";
-import Image from "next/image";
+import { ClientSafeProvider, signIn } from 'next-auth/react';
+import Image from 'next/image';
 
-export const SignInProviderButton = ({ provider }: { provider: ClientSafeProvider }) => {
+export const SignInProviderButton = ({
+  provider,
+}: {
+  provider: ClientSafeProvider;
+}) => {
   return (
     <button
-      className="bg-white active:bg-slate-50 text-slate-700 px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center text-xs ease-linear transition-all duration-150"
+      className="mb-1 mr-1 inline-flex items-center rounded bg-white px-4 py-2 text-xs uppercase text-slate-700 shadow outline-none transition-all duration-150 ease-linear hover:shadow-md focus:outline-none active:bg-slate-50"
       onClick={() => signIn(provider.id)}
     >
       <Image
