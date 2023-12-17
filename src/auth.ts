@@ -8,6 +8,13 @@ import { NextAuthOptions } from 'next-auth';
 if (!process.env.APP_BASE_URL) throw new Error('APP_BASE_URL not set');
 
 export const authOptions = {
+  pages: {
+    signIn: '/signin',
+    // signOut: '/auth/signout',
+    // error: '/auth/error',
+    verifyRequest: '/email-sent',
+    // newUser: '/auth/new-user',
+  },
   theme: {
     logo: `${process.env.APP_BASE_URL}/logo.svg`,
     brandColor: '#000',
@@ -42,10 +49,17 @@ export const authOptions = {
         // return { id: "1", name: "J Smith", email: "jsmith@example.com" };
       },
     }),
-    // EmailProvider({
-    //   server: process.env.EMAIL_SERVER,
-    //   from: process.env.EMAIL_FROM,
-    // }),
+    EmailProvider({
+      server: {
+        host: process.env.EMAIL_SERVER_HOST,
+        port: process.env.EMAIL_SERVER_PORT,
+        auth: {
+          user: process.env.EMAIL_SERVER_USER,
+          pass: process.env.EMAIL_SERVER_PASSWORD,
+        },
+      },
+      from: process.env.EMAIL_FROM,
+    }),
     GithHubProvider({
       clientId: process.env.GITHUB_ID ?? '',
       clientSecret: process.env.GITHUB_SECRET ?? '',
