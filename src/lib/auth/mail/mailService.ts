@@ -1,4 +1,5 @@
-import fs from 'fs';
+// import fs from 'fs';
+import { promises as fs } from 'fs';
 
 let nodemailer = require('nodemailer');
 
@@ -86,8 +87,8 @@ async function prepareTemplate({
   EMAIL_COMPANY_NAME: string;
   EMAIL_BODY: string;
 }) {
-  const templatePath = `${process.cwd()}/src/lib/mail/template/email.html`;
-  let template = fs.readFileSync(templatePath, 'utf8');
+  const templatePath = `${process.cwd()}/src/lib/auth/mail/template/email.html`;
+  let template = await fs.readFile(templatePath, 'utf8');
 
   template = template.replace(/{{EMAIL_SUBJECT}}/g, EMAIL_SUBJECT);
   template = template.replace(/{{EMAIL_BASE_URL}}/g, EMAIL_BASE_URL);

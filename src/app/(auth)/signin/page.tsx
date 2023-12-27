@@ -1,6 +1,6 @@
 import { getCsrfToken, getProviders } from 'next-auth/react';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { authOptions } from '@/lib/auth/auth';
 import { redirect } from 'next/navigation';
 import { LoginForm } from './LoginForm';
 import { AuthCard } from '@/components/auth/card/AuthCard';

@@ -9,6 +9,9 @@ if (!process.env.COMPANY_NAME) {
 const content: { [key: string]: string } = {
   register: 'Check your email for the confirmation link.',
   reset: 'Check your email for the reset link.',
+  reset_password_send: 'Check your email for the reset password link.',
+  reset_password_changed:
+    'Your password has been changed and sent to your e-mail address.',
 };
 
 export default function EmailSentPage({

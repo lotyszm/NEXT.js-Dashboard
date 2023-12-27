@@ -15,6 +15,13 @@
       "when": 1703002279133,
       "tag": "0001_nifty_bloodaxe",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1703685070608,
+      "tag": "0002_burly_sinister_six",
+      "breakpoints": true
     }
   ]
 }

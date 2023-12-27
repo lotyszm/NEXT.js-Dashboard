@@ -9,7 +9,7 @@ import {
 } from 'next-auth/react';
 import { FormEvent, useEffect, useState } from 'react';
 import { BuiltInProviderType } from '@auth/core/providers';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { AuthMessageComponent } from '@/components/auth/card/AuthMessageComponent';
 
@@ -19,6 +19,7 @@ const errorMessages: Record<string, string> = {
   DefaultError: 'An error occurred while trying to sign in.',
   CredentialsSignin:
     "Invalid credentials or account does not exist or isn't verified.",
+  OAuthAccountNotLinked: 'This account is already linked to another user.',
 };
 
 type ProvidersType = Record<
@@ -30,6 +31,8 @@ const LoginForm = () => {
   const [providers, setProviders] = useState<ProvidersType | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [message, setMessage] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
   useEffect(() => {
     getProviders().then((providersTmp) => {
@@ -38,7 +41,14 @@ const LoginForm = () => {
     });
   }, []);
 
-  const router = useRouter();
+  useEffect(() => {
+    const errorKey = searchParams.get('error');
+    if (errorKey) {
+      errorKey && errorMessages[errorKey]
+        ? setMessage(errorMessages[errorKey])
+        : setMessage(errorMessages.DefaultError);
+    }
+  }, [searchParams]);
 
   if (isLoading)
     return <p className="p-5 text-center italic">Loading providers</p>;
@@ -53,11 +63,10 @@ const LoginForm = () => {
     const response = await signIn('credentials', {
       email: email,
       password: password,
-      // callbackUrl: '/',
+      callbackUrl: '/',
       redirect: false,
     });
 
-    console.log({ response });
     if (!response?.error) {
       router.push('/');
       router.refresh();
@@ -84,13 +93,15 @@ const LoginForm = () => {
             <div className="relative mb-3 w-full">
               <label
                 className="mb-2 block text-xs font-bold uppercase text-slate-600"
-                htmlFor="grid-password"
+                htmlFor="email"
               >
                 Email
               </label>
               <input
                 type="email"
                 name="email"
+                id="email"
+                autoComplete="email"
                 className="w-full rounded border-0 bg-white px-3 py-3 text-sm text-slate-600 placeholder-slate-300 shadow transition-all duration-150 ease-linear focus:outline-none focus:ring"
                 placeholder="Email"
                 required
@@ -99,13 +110,14 @@ const LoginForm = () => {
             <div className="relative mb-3 w-full">
               <label
                 className="mb-2 block text-xs font-bold uppercase text-slate-600"
-                htmlFor="grid-password"
+                htmlFor="password"
               >
                 Password
               </label>
               <input
                 type="password"
                 name="password"
+                id="password"
                 className="w-full rounded border-0 bg-white px-3 py-3 text-sm text-slate-600 placeholder-slate-300 shadow transition-all duration-150 ease-linear focus:outline-none focus:ring"
                 placeholder="Password"
                 required
@@ -125,7 +137,13 @@ const LoginForm = () => {
         </div>
       </div>
 
-      <div className="flex-auto px-4 py-10 pt-0 text-center lg:px-10">
+      <div className="flex-auto px-4 py-3 pt-0 text-center lg:px-10">
+        <Link className="underline" href="/reset-password">
+          Forget password?
+        </Link>
+      </div>
+
+      <div className="flex-auto px-4 py-3 pb-16 text-center lg:px-10">
         <Link className="underline" href="/register">
           Register new account
         </Link>

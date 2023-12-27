@@ -2,7 +2,7 @@
 
 import { db } from '@/db';
 import { users, verificationTokens } from '@/db/schema/user';
-import { sendMail } from '@/lib/mail/mailService';
+import { sendMail } from '@/lib/auth/mail/mailService';
 import { randomString } from '@/lib/utils';
 import { hash } from 'bcrypt';
 import { eq } from 'drizzle-orm';

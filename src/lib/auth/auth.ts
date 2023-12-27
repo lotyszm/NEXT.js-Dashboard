@@ -2,7 +2,7 @@ import GithHubProvider from 'next-auth/providers/github';
 import { DrizzleAdapter } from '@auth/drizzle-adapter';
 import { db } from '@/db/index';
 import { NextAuthOptions } from 'next-auth';
-import { users } from '../db/schema/user';
+import { users } from '../../db/schema/user';
 import { eq } from 'drizzle-orm';
 import { redirect } from 'next/navigation';
 import { compare, hash } from 'bcrypt';
